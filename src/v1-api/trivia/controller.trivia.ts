@@ -1,6 +1,6 @@
 import * as errors from "./errors.trivia.js";
 import * as service from "./service.trivia.js";
-import type { TriviaAPIHandler } from "./types/types.js";
+import type { TriviaAPIHandler } from "../types/types.js";
 
 export const triviaController: TriviaAPIHandler = async (
 	request,

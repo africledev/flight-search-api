@@ -1,5 +1,5 @@
 import express from "express";
-import { triviaController } from "./controller.trivia.js";
+import { triviaController } from "./trivia/controller.trivia.js";
 
 const router = express.Router();
 
