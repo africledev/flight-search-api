@@ -1,0 +1,11 @@
+{
+	"extends": "@tsconfig/strictest/tsconfig.json",
+	"compilerOptions": {
+		"lib": ["ES2022"],
+		"outDir": "./dist",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"noPropertyAccessFromIndexSignature": false
+	},
+	"include": ["./src/**/*.ts"]
+}

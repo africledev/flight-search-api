@@ -1,0 +1,42 @@
+{
+	"name": "numberama",
+	"version": "1.0.0",
+	"description": "A game of numbers",
+	"type": "module",
+	"scripts": {
+		"build": "pnpm lint && pnpm api:models && pnpm api:deref && tsc",
+		"lint": "biome check --fix",
+		"start": "node dist/index.js",
+		"dev": "tsx watch src/index.ts",
+		"api:copy": "cp api-derefed.yaml dist/",
+		"api:deref": "tsx deref-api-spec.ts",
+		"api:models": "openapi-typescript src/v1-api/api.yaml --export-type type --o src/v1-api/types/oas-generated.ts"
+	},
+	"license": "MIT",
+	"packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903",
+	"devDependencies": {
+		"@apidevtools/swagger-parser": "^10.1.0",
+		"@biomejs/biome": "^1.8.3",
+		"@tsconfig/strictest": "^2.0.5",
+		"@types/cors": "^2.8.17",
+		"@types/express": "^4.17.21",
+		"@types/express-serve-static-core": "^4.19.5",
+		"@types/js-yaml": "^4.0.9",
+		"@types/morgan": "^1.9.9",
+		"@types/node": "^22.5.4",
+		"openapi-typescript": "^7.4.0",
+		"tsx": "^4.19.0",
+		"typescript": "^5.6.2"
+	},
+	"dependencies": {
+		"axios": "^1.7.7",
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.5",
+		"exponential-backoff": "^3.1.1",
+		"express": "^4.20.0",
+		"express-openapi-validator": "^5.3.5",
+		"js-yaml": "^4.1.0",
+		"morgan": "^1.10.0",
+		"zod": "^3.23.8"
+	}
+}

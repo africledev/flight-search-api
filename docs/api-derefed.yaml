@@ -1,0 +1,328 @@
+openapi: 3.0.0
+info:
+  title: NumberAma API
+  version: 1.0.0
+  contact:
+    name: AfricleDev
+    email: africle@gmail.com
+  description: |
+    ## Its A Game of Numbers 💯 
+    A simple trivia API of facts about numbers. Great for learning and fun.
+
+    ## Example
+    calling the API with a number like 42
+    ```bash
+    curl -s "{server}/api/trivia/42" \
+    -H "Content-Type: application/json" | jq
+    ```
+
+    will return something like
+
+    ```json
+      {
+        "text": "The number 42 is the answer to the question Life, the Universe and Everything",
+        "number": 42,
+        "found": true,
+        "type": "trivia"
+      }
+    ```
+
+    Also, `/api/:num` is a shorthand for `/api/trivia/:num`
+servers:
+  - url: https://api.numberama.dev
+    description: Production server (hypothetical)
+  - url: http://localhost:8888
+    description: Localhost server
+tags:
+  - name: Meta
+    description: Metadata related requests
+  - name: Numbers
+    description: Number facts & details
+paths:
+  /:
+    get:
+      operationId: getMetadata
+      summary: Get metadata from the API root
+      tags:
+        - Meta
+      responses:
+        '200':
+          description: OK
+  /trivia/{num}:
+    get:
+      operationId: getTriviaForNumber
+      summary: Get a trivia fact for a number
+      tags:
+        - Numbers
+      parameters:
+        - name: num
+          in: path
+          required: true
+          schema:
+            type: string
+            format: int32
+            minimum: 0
+            maximum: 99999
+            example: 42
+          description: The number to search for
+          example: 42
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - text
+                  - number
+                  - found
+                  - type
+                properties:
+                  text:
+                    type: string
+                    example: The number 42 is the answer to the question Life
+                  number:
+                    type: integer
+                    example: 42
+                  found:
+                    type: boolean
+                    example: true
+                  type:
+                    example: trivia
+                    type: string
+                    enum:
+                      - math
+                      - date
+                      - trivia
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    example: Bad Request
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    example: Bad Request
+  /{num}:
+    get:
+      operationId: getTriviaForNumber
+      summary: Get a trivia fact for a number
+      tags:
+        - Numbers
+      parameters:
+        - name: num
+          in: path
+          required: true
+          schema:
+            type: string
+            format: int32
+            minimum: 0
+            maximum: 99999
+            example: 42
+          description: The number to search for
+          example: 42
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - text
+                  - number
+                  - found
+                  - type
+                properties:
+                  text:
+                    type: string
+                    example: The number 42 is the answer to the question Life
+                  number:
+                    type: integer
+                    example: 42
+                  found:
+                    type: boolean
+                    example: true
+                  type:
+                    example: trivia
+                    type: string
+                    enum:
+                      - math
+                      - date
+                      - trivia
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    example: Bad Request
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    example: Bad Request
+components:
+  parameters:
+    NumParam:
+      name: num
+      in: path
+      required: true
+      schema:
+        type: string
+        format: int32
+        minimum: 0
+        maximum: 99999
+        example: 42
+      description: The number to search for
+      example: 42
+    MathParam:
+      name: math
+      in: path
+      required: true
+      schema:
+        type: string
+        format: int32
+        minimum: 0
+        maximum: 99999
+        example: 12
+      description: The number to search for
+      example: 12
+    DateParam:
+      name: dt
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: '[0-9]{1,2}-[0-9]{1,2}'
+        example: 01-20
+      description: The month and combination (as month-day) to search for
+      example: 01-20
+  schemas:
+    NumQuery:
+      type: string
+      format: int32
+      minimum: 0
+      maximum: 99999
+      example: 42
+    MathQuery:
+      type: string
+      format: int32
+      minimum: 0
+      maximum: 99999
+      example: 12
+    DateQuery:
+      type: string
+      pattern: '[0-9]{1,2}-[0-9]{1,2}'
+      example: 01-20
+    GameType:
+      type: string
+      enum:
+        - math
+        - date
+        - trivia
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          example: Bad Request
+    TriviaResponse:
+      type: object
+      required:
+        - text
+        - number
+        - found
+        - type
+      properties:
+        text:
+          type: string
+          example: The number 42 is the answer to the question Life
+        number:
+          type: integer
+          example: 42
+        found:
+          type: boolean
+          example: true
+        type:
+          example: trivia
+          type: string
+          enum:
+            - math
+            - date
+            - trivia
+    MathResponse:
+      type: object
+      properties:
+        text:
+          type: string
+          example: 5 is the number of platonic solids
+        number:
+          type: integer
+          example: 5
+        found:
+          type: boolean
+          example: true
+        type:
+          example: math
+          type: string
+          enum:
+            - math
+            - date
+            - trivia
+    DateResponse:
+      type: object
+      properties:
+        text:
+          type: string
+          example: >-
+            September 10th is the day in 2001 that Charles Ingram cheats his way
+            into winning one million pounds on a British version of Who Wants to
+            be a Millionaire.
+        year:
+          type: integer
+          pattern: '[0-9]{4}'
+          example: 2001
+        number:
+          type: integer
+          example: 254
+        found:
+          type: boolean
+          example: true
+        type:
+          example: date
+          type: string
+          enum:
+            - math
+            - date
+            - trivia
