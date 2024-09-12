@@ -1,8 +1,8 @@
 import { config } from "../../config.js";
 import axios from "./axios.js";
 
-import type * as oas from "../types/oas.js";
-import type { INumbersIQ } from "../types/types.js";
+import type * as oas from "../../v1-api/types/oas.js";
+import type { INumbersIQ } from "../../v1-api/types/types.js";
 
 export class NumbersIQ implements INumbersIQ {
 	private baseUrl: string;

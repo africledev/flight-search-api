@@ -1,6 +1,6 @@
 import { backOff as retryAndBackOff } from "exponential-backoff";
 import { config } from "../../config.js";
-import { NumbersIQ } from "../numbersiq/index.js";
+import { NumbersIQ } from "../../external/numbersiq/index.js";
 import type { MathFactOutput } from "../types/oas.js";
 import * as errors from "./errors.math.js";
 
