@@ -6,7 +6,9 @@ info:
     name: AfricleDev
     email: africle.arts@gmail.com
   description: |
-    ## Its A Game of Numbers 💯 
+    ## About
+
+    ### Its A Game of Numbers 💯 
     A simple trivia API of facts about numbers. Great for learning and fun.
 
     ## Example
@@ -67,17 +69,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/TriviaResponse"
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
+          $ref: "#/components/responses/BadRequest"
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
+          $ref: "#/components/responses/InternalServerError"
 
   /{num}:
     get:
@@ -141,7 +135,7 @@ components:
         - date
         - trivia
 
-    ErrorResponse:
+    APIError:
       type: object
       required:
         - error
@@ -206,5 +200,20 @@ components:
         type:
           $ref: "#/components/schemas/GameType"
           example: date
+
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/APIError"
+
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/APIError"
 
 
