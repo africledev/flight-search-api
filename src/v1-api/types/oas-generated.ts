@@ -80,11 +80,6 @@ export type components = {
          * @example 42
          */
         NumQuery: string;
-        /**
-         * Format: int32
-         * @example 12
-         */
-        MathQuery: string;
         /** @example 01-20 */
         DateQuery: string;
         /** @enum {string} */
@@ -152,11 +147,6 @@ export type components = {
          * @example 42
          */
         NumParam: components["schemas"]["NumQuery"];
-        /**
-         * @description The number to search for
-         * @example 12
-         */
-        MathParam: components["schemas"]["MathQuery"];
         /**
          * @description The month and combination (as month-day) to search for
          * @example 01-20

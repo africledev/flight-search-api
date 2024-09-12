@@ -8,8 +8,8 @@ info:
   description: |
     ## About
 
-    ### Its A Game of Numbers 💯 
-    A simple trivia API of facts about numbers. Great for learning and fun.
+    ### Its A Game of Facts 💯 
+    A simple trivia API of facts about facts. Great for learning and fun.
 
     ## Example
     calling the API with a number like 42
@@ -37,9 +37,9 @@ servers:
     description: Localhost server
 tags:
   - name: Meta
-    description: Metadata related requests
-  - name: Numbers
-    description: Number facts & details
+    description: Metadata
+  - name: Facts
+    description: Number func facts
 paths:
   /:
     get:
@@ -55,7 +55,7 @@ paths:
       operationId: getTriviaForNumber
       summary: Get a trivia fact for a number
       tags:
-        - Numbers
+        - Facts
       parameters:
         - name: num
           in: path
@@ -126,7 +126,7 @@ paths:
       operationId: getTriviaForNumber
       summary: Get a trivia fact for a number
       tags:
-        - Numbers
+        - Facts
       parameters:
         - name: num
           in: path
@@ -197,7 +197,7 @@ paths:
       operationId: getMathFactForNumber
       summary: Get a Math fact for a number
       tags:
-        - Numbers
+        - Facts
       parameters:
         - name: num
           in: path
@@ -272,18 +272,6 @@ components:
         example: 42
       description: The number to search for
       example: 42
-    MathParam:
-      name: math
-      in: path
-      required: true
-      schema:
-        type: string
-        format: int32
-        minimum: 0
-        maximum: 99999
-        example: 12
-      description: The number to search for
-      example: 12
     DateParam:
       name: dt
       in: path
@@ -301,12 +289,6 @@ components:
       minimum: 0
       maximum: 99999
       example: 42
-    MathQuery:
-      type: string
-      format: int32
-      minimum: 0
-      maximum: 99999
-      example: 12
     DateQuery:
       type: string
       pattern: '[0-9]{1,2}-[0-9]{1,2}'

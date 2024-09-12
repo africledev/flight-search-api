@@ -108,15 +108,6 @@ components:
       description: The number to search for
       example: 42
 
-    MathParam:
-      name: math
-      in: path
-      required: true
-      schema:
-        $ref: "#/components/schemas/MathQuery"
-      description: The number to search for
-      example: 12
-
     DateParam:
       name: dt
       in: path
@@ -134,13 +125,6 @@ components:
       minimum: 0
       maximum: 99999
       example: 42
-
-    MathQuery:
-      type: string
-      format: int32
-      minimum: 0
-      maximum: 99999
-      example: 12
 
     DateQuery:
       type: string
