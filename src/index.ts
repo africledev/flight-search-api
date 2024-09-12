@@ -7,6 +7,7 @@ import morgan from "morgan";
 import { config } from "./config.js";
 import { apiAutoValidator } from "./mw.js";
 import router from "./v1-api/index.js";
+import { terminateGracefully } from "./utils/index.js";
 
 const app = express();
 
@@ -22,6 +23,15 @@ app.use("/docs", express.static(apiDocsRoot));
 app.use(apiAutoValidator("../docs/"));
 
 const PORT = config.PORT || 3000;
-app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
+const appName = config.AppName || "NumberAma";
+const server = app.listen(PORT, () => {
+	console.log(`[${appName} Server] is running on port ${PORT}`);
+}).on("error", (err) => {
+	console.warn(`[${appName} Server] Error starting server on port ${PORT}`);
+	console.error(err);
+	process.exit(1);	
 });
+
+process.on("SIGINT", terminateGracefully(server, "SIGINT"));
+process.on("SIGHUP", terminateGracefully(server, "SIGHUP"));
+process.on("SIGTERM", terminateGracefully(server, "SIGTERM"));
