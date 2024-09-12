@@ -4,9 +4,11 @@ info:
   version: 1.0.0
   contact:
     name: AfricleDev
-    email: africle@gmail.com
+    email: africle.arts@gmail.com
   description: |
-    ## Its A Game of Numbers 💯 
+    ## About
+
+    ### Its A Game of Numbers 💯 
     A simple trivia API of facts about numbers. Great for learning and fun.
 
     ## Example
@@ -190,6 +192,72 @@ paths:
                   error:
                     type: string
                     example: Bad Request
+  /math/{num}:
+    get:
+      operationId: getMathFactForNumber
+      summary: Get a Math fact for a number
+      tags:
+        - Numbers
+      parameters:
+        - name: num
+          in: path
+          required: true
+          schema:
+            type: string
+            format: int32
+            minimum: 0
+            maximum: 99999
+            example: 42
+          description: The number to search for
+          example: 42
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  text:
+                    type: string
+                    example: 5 is the number of platonic solids
+                  number:
+                    type: integer
+                    example: 5
+                  found:
+                    type: boolean
+                    example: true
+                  type:
+                    example: math
+                    type: string
+                    enum:
+                      - math
+                      - date
+                      - trivia
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    example: Bad Request
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    example: Bad Request
 components:
   parameters:
     NumParam:
@@ -249,7 +317,7 @@ components:
         - math
         - date
         - trivia
-    ErrorResponse:
+    APIError:
       type: object
       required:
         - error
@@ -326,3 +394,28 @@ components:
             - math
             - date
             - trivia
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+            properties:
+              error:
+                type: string
+                example: Bad Request
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - error
+            properties:
+              error:
+                type: string
+                example: Bad Request

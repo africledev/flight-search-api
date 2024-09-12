@@ -33,4 +33,19 @@ export class NumbersIQ implements INumbersIQ {
 
 		return output;
 	}
+
+	async mathFactFor(num: number): Promise<oas.MathFactOutput | undefined> {
+		const url = `${this.baseUrl}/${num}/math`;
+		let output: oas.MathFactOutput | undefined = undefined;
+
+		try {
+			const { data } = await axios.get<oas.MathFactOutput>(url);
+			output = data;
+			return output;
+		} catch (error) {
+			console.error(error);
+		}
+
+		return output;
+	}
 }

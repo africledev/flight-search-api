@@ -54,6 +54,23 @@ export type paths = {
         patch?: never;
         trace?: never;
     };
+    "/math/{num}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a Math fact for a number */
+        get: operations["getMathFactForNumber"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 };
 export type webhooks = Record<string, never>;
 export type components = {
@@ -72,7 +89,7 @@ export type components = {
         DateQuery: string;
         /** @enum {string} */
         GameType: "math" | "date" | "trivia";
-        ErrorResponse: {
+        APIError: {
             /** @example Bad Request */
             error: string;
         };
@@ -109,7 +126,26 @@ export type components = {
             type?: components["schemas"]["GameType"];
         };
     };
-    responses: never;
+    responses: {
+        /** @description Bad Request */
+        BadRequest: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["APIError"];
+            };
+        };
+        /** @description Internal Server Error */
+        InternalServerError: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["APIError"];
+            };
+        };
+    };
     parameters: {
         /**
          * @description The number to search for
@@ -175,24 +211,36 @@ export interface operations {
                     "application/json": components["schemas"]["TriviaResponse"];
                 };
             };
-            /** @description Bad Request */
-            400: {
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getMathFactForNumber: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /**
+                 * @description The number to search for
+                 * @example 42
+                 */
+                num: components["parameters"]["NumParam"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
+                    "application/json": components["schemas"]["MathResponse"];
                 };
             };
-            /** @description Internal Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorResponse"];
-                };
-            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
         };
     };
 }

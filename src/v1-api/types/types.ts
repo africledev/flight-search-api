@@ -21,9 +21,15 @@ type BackendAPIHandler<T extends APIHandlerConfig> = RequestHandler<
 
 export type TriviaAPIHandler = BackendAPIHandler<{
 	pathParams: oas.TriviaPathParams;
-	responseBody: oas.TriviaOutput | oas.APIErrorResponse;
+	responseBody: oas.TriviaOutput | oas.APIError;
+}>;
+
+export type MathAPIHandler = BackendAPIHandler<{
+	pathParams: oas.MathPathParams;
+	responseBody: oas.MathFactOutput | oas.APIError;
 }>;
 
 export interface INumbersIQ {
 	triviaFor(num: number): Promise<oas.TriviaOutput | undefined>;
+	mathFactFor(num: number): Promise<oas.MathFactOutput | undefined>;
 }

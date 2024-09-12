@@ -77,6 +77,25 @@ paths:
     get:
       $ref: '#/paths/~1trivia~1{num}/get'
 
+  /math/{num}:
+    get:
+      operationId: getMathFactForNumber
+      summary: Get a Math fact for a number
+      tags: 
+        - Numbers
+      parameters:
+        - $ref: "#/components/parameters/NumParam"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MathResponse"
+        '400':
+          $ref: "#/components/responses/BadRequest"
+        '500':
+          $ref: "#/components/responses/InternalServerError"
 
 components:
   parameters:
