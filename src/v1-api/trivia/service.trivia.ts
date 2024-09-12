@@ -1,8 +1,8 @@
 import { backOff as retryAndBackOff } from "exponential-backoff";
 import { config } from "../../config.js";
-import * as errors from "./errors.trivia.js";
 import { NumbersIQ } from "../numbersiq/index.js";
 import type { TriviaOutput } from "../types/oas.js";
+import * as errors from "./errors.trivia.js";
 
 const MaxExternalAPIRetries = config.MaxExternalAPIRetries;
 
