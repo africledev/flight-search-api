@@ -258,6 +258,112 @@ paths:
                   error:
                     type: string
                     example: Bad Request
+  /date/{when}:
+    get:
+      operationId: getDateFactForPeriod
+      summary: Get a date fact for a period in time
+      tags:
+        - Facts
+      parameters:
+        - name: when
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: ^(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])|(?:19|20)\d{2})$
+          description: >
+            The month-day combination or year to search for. Valid usage
+            includes:
+
+            - 01-20 (January 20th)
+
+            - 12-31 (December 31st)
+
+            - 2001 (Year 2001)
+
+            - 1999 (Year 1999)
+
+
+            Some invalid usage includes:  
+
+            - 01-2001 (January 2001st)
+
+            13-01 (invalid month)
+
+            01-32 (invalid day)
+
+            2100 (year out of range)
+
+            999 (incomplete year)
+
+
+            For optimal results, ensure using a valid month-day or year value as
+            the 
+
+            in-built validation might still not catch all invalid dates like
+            02-31 (a.k.a Feb, 31st).
+          examples:
+            month-day:
+              value: 01-20
+              summary: Search for date facts around the 20th of January
+            year:
+              value: 2001
+              summary: Search for date facts around the year 2001
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  text:
+                    type: string
+                    example: >-
+                      September 10th is the day in 2001 that Charles Ingram
+                      cheats his way into winning one million pounds on a
+                      British version of Who Wants to be a Millionaire.
+                  year:
+                    type: integer
+                    pattern: '[0-9]{4}'
+                    example: 2001
+                  number:
+                    type: integer
+                    example: 254
+                  found:
+                    type: boolean
+                    example: true
+                  type:
+                    example: date
+                    type: string
+                    enum:
+                      - math
+                      - date
+                      - trivia
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    example: Bad Request
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - error
+                properties:
+                  error:
+                    type: string
+                    example: Bad Request
 components:
   parameters:
     NumParam:
@@ -273,15 +379,49 @@ components:
       description: The number to search for
       example: 42
     DateParam:
-      name: dt
+      name: when
       in: path
       required: true
       schema:
         type: string
-        pattern: '[0-9]{1,2}-[0-9]{1,2}'
-        example: 01-20
-      description: The month and combination (as month-day) to search for
-      example: 01-20
+        pattern: ^(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])|(?:19|20)\d{2})$
+      description: >
+        The month-day combination or year to search for. Valid usage includes:
+
+        - 01-20 (January 20th)
+
+        - 12-31 (December 31st)
+
+        - 2001 (Year 2001)
+
+        - 1999 (Year 1999)
+
+
+        Some invalid usage includes:  
+
+        - 01-2001 (January 2001st)
+
+        13-01 (invalid month)
+
+        01-32 (invalid day)
+
+        2100 (year out of range)
+
+        999 (incomplete year)
+
+
+        For optimal results, ensure using a valid month-day or year value as
+        the 
+
+        in-built validation might still not catch all invalid dates like 02-31
+        (a.k.a Feb, 31st).
+      examples:
+        month-day:
+          value: 01-20
+          summary: Search for date facts around the 20th of January
+        year:
+          value: 2001
+          summary: Search for date facts around the year 2001
   schemas:
     NumQuery:
       type: string
@@ -291,8 +431,7 @@ components:
       example: 42
     DateQuery:
       type: string
-      pattern: '[0-9]{1,2}-[0-9]{1,2}'
-      example: 01-20
+      pattern: ^(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])|(?:19|20)\d{2})$
     GameType:
       type: string
       enum:

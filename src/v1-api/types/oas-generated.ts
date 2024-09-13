@@ -71,6 +71,23 @@ export type paths = {
         patch?: never;
         trace?: never;
     };
+    "/date/{when}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a date fact for a period in time */
+        get: operations["getDateFactForPeriod"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 };
 export type webhooks = Record<string, never>;
 export type components = {
@@ -80,7 +97,6 @@ export type components = {
          * @example 42
          */
         NumQuery: string;
-        /** @example 01-20 */
         DateQuery: string;
         /** @enum {string} */
         GameType: "math" | "date" | "trivia";
@@ -147,10 +163,22 @@ export type components = {
          * @example 42
          */
         NumParam: components["schemas"]["NumQuery"];
-        /**
-         * @description The month and combination (as month-day) to search for
-         * @example 01-20
-         */
+        /** @description The month-day combination or year to search for. Valid usage includes:
+         *     - 01-20 (January 20th)
+         *     - 12-31 (December 31st)
+         *     - 2001 (Year 2001)
+         *     - 1999 (Year 1999)
+         *
+         *     Some invalid usage includes:
+         *     - 01-2001 (January 2001st)
+         *     13-01 (invalid month)
+         *     01-32 (invalid day)
+         *     2100 (year out of range)
+         *     999 (incomplete year)
+         *
+         *     For optimal results, ensure using a valid month-day or year value as the
+         *     in-built validation might still not catch all invalid dates like 02-31 (a.k.a Feb, 31st).
+         *      */
         DateParam: components["schemas"]["DateQuery"];
     };
     requestBodies: never;
@@ -227,6 +255,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MathResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            500: components["responses"]["InternalServerError"];
+        };
+    };
+    getDateFactForPeriod: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The month-day combination or year to search for. Valid usage includes:
+                 *     - 01-20 (January 20th)
+                 *     - 12-31 (December 31st)
+                 *     - 2001 (Year 2001)
+                 *     - 1999 (Year 1999)
+                 *
+                 *     Some invalid usage includes:
+                 *     - 01-2001 (January 2001st)
+                 *     13-01 (invalid month)
+                 *     01-32 (invalid day)
+                 *     2100 (year out of range)
+                 *     999 (incomplete year)
+                 *
+                 *     For optimal results, ensure using a valid month-day or year value as the
+                 *     in-built validation might still not catch all invalid dates like 02-31 (a.k.a Feb, 31st).
+                 *      */
+                when: components["parameters"]["DateParam"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DateResponse"];
                 };
             };
             400: components["responses"]["BadRequest"];

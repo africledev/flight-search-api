@@ -22,3 +22,13 @@ type MathResponse =
 export type MathFactOutput = Omit<MathResponse, "type"> & {
 	type: "math";
 };
+
+export type DatePathParams =
+	operations["getDateFactForPeriod"]["parameters"]["path"];
+
+type DateResponse =
+	operations["getDateFactForPeriod"]["responses"]["200"]["content"]["application/json"];
+
+export type DateFactOutput = Omit<DateResponse, "type"> & {
+	type: "date";
+};

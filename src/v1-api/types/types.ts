@@ -29,7 +29,13 @@ export type MathAPIHandler = BackendAPIHandler<{
 	responseBody: oas.MathFactOutput | oas.APIError;
 }>;
 
+export type DateAPIHandler = BackendAPIHandler<{
+	pathParams: oas.DatePathParams;
+	responseBody: oas.DateFactOutput | oas.APIError;
+}>;
+
 export interface INumbersIQ {
 	triviaFor(num: number): Promise<oas.TriviaOutput | undefined>;
 	mathFactFor(num: number): Promise<oas.MathFactOutput | undefined>;
+	dateFactFor(when: string): Promise<oas.DateFactOutput | undefined>;
 }

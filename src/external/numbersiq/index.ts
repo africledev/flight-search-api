@@ -20,7 +20,7 @@ export class NumbersIQ implements INumbersIQ {
 	}
 
 	async triviaFor(num: number): Promise<oas.TriviaOutput | undefined> {
-		const url = `${this.baseUrl}/${num}/trivia`;
+		const url = `${this.baseUrl}/${num}/trivia?default=${this.boringTxt(num)}`;
 		let output: oas.TriviaOutput | undefined = undefined;
 
 		try {
@@ -35,7 +35,7 @@ export class NumbersIQ implements INumbersIQ {
 	}
 
 	async mathFactFor(num: number): Promise<oas.MathFactOutput | undefined> {
-		const url = `${this.baseUrl}/${num}/math`;
+		const url = `${this.baseUrl}/${num}/math?default=${this.boringTxt(num)}`;
 		let output: oas.MathFactOutput | undefined = undefined;
 
 		try {
@@ -47,5 +47,28 @@ export class NumbersIQ implements INumbersIQ {
 		}
 
 		return output;
+	}
+
+	async dateFactFor(when: string): Promise<oas.DateFactOutput | undefined> {
+		const url = `${this.baseUrl}/${when}/date?default=${this.boringTxt(when)}`;
+		let output: oas.DateFactOutput | undefined = undefined;
+
+		try {
+			const { data } = await axios.get<oas.DateFactOutput>(url);
+			output = data;
+			return output;
+		} catch (error) {
+			console.error(error);
+		}
+
+		return output;
+	}
+
+	boringTxt(value: number | string): string {
+		if (typeof value === "number") {
+			return `${value} is boring! try a different number.`;
+		}
+
+		return `${value} is boring! try a different date.`;
 	}
 }
