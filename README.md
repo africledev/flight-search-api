@@ -30,8 +30,7 @@ A simple API trivia of facts on numbers. Great for learning and fun.
 Calling the API with a number like 42
 
 ```bash
-curl -s "{server}/api/trivia/42" \
--H "Content-Type: application/json" | jq
+curl -s "{server}/api/trivia/42" -H "Content-Type: application/json" | jq
 ```
 
 will return something like
