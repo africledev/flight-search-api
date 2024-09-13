@@ -8,8 +8,8 @@ export const mathFactController: MathAPIHandler = async (
 ): Promise<void> => {
 	const num = Number.parseInt(request.params.num, 10);
 	try {
-		const triviaResult = await service.getMathFactFor(num);
-		response.status(200).json(triviaResult);
+		const mathFact = await service.getMathFactFor(num);
+		response.status(200).json(mathFact);
 	} catch (error) {
 		const err = error as Error;
 		const status = 500;
