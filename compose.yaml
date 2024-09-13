@@ -1,0 +1,13 @@
+
+version: "3.9"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8888:8888"
+    environment:
+      - PORT=8888
+      - MaxExternalAPIRetries=3
+      - NumbersAPIUrl=http://numbersapi.com
+    restart: always

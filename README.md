@@ -4,6 +4,16 @@ A simple API trivia facts on numbers. Great for learning and fun.
 
 ## Usage
 
+### Docker
+
+1. Clone the repo
+2. Build the image with `docker build -t numberama .`
+3. Run the image with `docker run --rm -p 8888:8888 numberama`
+4. Open `http://localhost:8888/docs` to see the API docs
+5. Use the API with the example(s) in the docs or see below
+
+### Local
+
 1. Clone the repo
 2. Install dependencies with `pnpm install`
 3. Copy the `.example.env` file to `.env` and fill/change the values if needed
