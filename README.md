@@ -1,6 +1,10 @@
 # NumberAma API
 
-A simple API trivia facts on numbers. Great for learning and fun.
+A simple API trivia of facts on numbers. Great for learning and fun.
+
+![An API Call](statics/images/api-call.jpg)
+<br ><br >
+![API Docs](statics/images/api-docs.jpg)
 
 ## Usage
 
