@@ -52,6 +52,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MetaResponse"
   
   /trivia/{num}:
     get:
@@ -75,6 +79,8 @@ paths:
 
   /{num}:
     get:
+      tags: 
+        - Facts
       $ref: '#/paths/~1trivia~1{num}/get'
 
   /math/{num}:
@@ -211,6 +217,11 @@ components:
 
     MathResponse:
       type: object
+      required:
+        - text
+        - number
+        - found
+        - type
       properties:
         text:
           type: string
@@ -227,6 +238,12 @@ components:
   
     DateResponse:
       type: object
+      required:
+        - text
+        - year
+        - number
+        - found
+        - type
       properties:
         text:
           type: string
@@ -244,6 +261,16 @@ components:
         type:
           $ref: "#/components/schemas/GameType"
           example: date
+
+    MetaResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          maxLength: 250
+          example: NumberAma is up and running!
 
   responses:
     BadRequest:

@@ -116,25 +116,29 @@ export type components = {
         };
         MathResponse: {
             /** @example 5 is the number of platonic solids */
-            text?: string;
+            text: string;
             /** @example 5 */
-            number?: number;
+            number: number;
             /** @example true */
-            found?: boolean;
+            found: boolean;
             /** @example math */
-            type?: components["schemas"]["GameType"];
+            type: components["schemas"]["GameType"];
         };
         DateResponse: {
             /** @example September 10th is the day in 2001 that Charles Ingram cheats his way into winning one million pounds on a British version of Who Wants to be a Millionaire. */
-            text?: string;
+            text: string;
             /** @example 2001 */
-            year?: number;
+            year: number;
             /** @example 254 */
-            number?: number;
+            number: number;
             /** @example true */
-            found?: boolean;
+            found: boolean;
             /** @example date */
-            type?: components["schemas"]["GameType"];
+            type: components["schemas"]["GameType"];
+        };
+        MetaResponse: {
+            /** @example NumberAma is up and running! */
+            message: string;
         };
     };
     responses: {
