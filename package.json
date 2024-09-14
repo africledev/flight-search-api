@@ -4,12 +4,14 @@
 	"description": "A game of numbers",
 	"type": "module",
 	"scripts": {
-		"build": "pnpm lint && pnpm api:codegen && pnpm api:deref && tsc",
+		"build": "pnpm lint && pnpm api:gen:models && pnpm api:gen:deref && tsc",
 		"lint": "biome check --fix",
 		"start": "node dist/index.js",
 		"dev": "tsx watch src/index.ts",
-		"api:deref": "tsx deref-api-spec.ts",
-		"api:codegen": "openapi-typescript src/v1-api/api.yaml --export-type type --o src/v1-api/types/oas-generated.ts"
+		"api:gen:deref": "tsx deref-api-spec.ts",
+		"api:gen:models": "openapi-typescript src/v1-api/api.yaml --export-type type --o src/v1-api/types/oas-generated.ts",
+		"api:fix:client": "biome check --fix --unsafe sdk",
+		"api:gen:client": "openapi-zod-client src/v1-api/api.yaml -o sdk -b http://localhost:8888/api --group-strategy=tag-file --export-types=true --strict-objects=true --with-docs=true --with-description=true && pnpm api:fix:client"
 	},
 	"license": "MIT",
 	"packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903",
@@ -23,7 +25,9 @@
 		"@types/js-yaml": "^4.0.9",
 		"@types/morgan": "^1.9.9",
 		"@types/node": "^22.5.4",
+		"@zodios/core": "^10.9.6",
 		"openapi-typescript": "^7.4.0",
+		"openapi-zod-client": "^1.18.2",
 		"tsx": "^4.19.0",
 		"typescript": "^5.6.2"
 	},
